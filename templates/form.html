@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Todo{{ mode }}{% endblock %}
+{% block content %}
+<section class="form-card">
+  <h1>Todoを{{ mode }}</h1>
+  <form method="post">
+    <label>タイトル<span>必須</span><input name="title" maxlength="100" required value="{{ todo.title if todo else '' }}"></label>
+    <label>内容<span>必須</span><textarea name="content" rows="6" required>{{ todo.content if todo else '' }}</textarea></label>
+    <label>期日<span>必須</span><input type="date" name="due_date" required value="{{ todo.due_date if todo else '' }}"></label>
+    <label>重要度<span>必須</span>
+      <select name="priority" required>
+        {% set selected_priority = todo.priority if todo and todo.priority else 'medium' %}
+        <option value="high" {% if selected_priority == 'high' %}selected{% endif %}>高</option>
+        <option value="medium" {% if selected_priority == 'medium' %}selected{% endif %}>中</option>
+        <option value="low" {% if selected_priority == 'low' %}selected{% endif %}>低</option>
+      </select>
+    </label>
+    <div class="actions">
+      <button class="button" type="submit">{{ mode }}する</button>
+      <a class="button secondary" href="{{ url_for('index') }}">戻る</a>
+    </div>
+  </form>
+</section>
+{% endblock %}
